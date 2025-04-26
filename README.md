@@ -54,5 +54,5 @@ This project allows users to submit feedback via a simple and clean interface. T
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/feedback-collector.git
-   cd feedback-collector
+   git clone https://github.com/rudra85gituser/Feedback-Collector-1.0.git
+   cd Feedback-Collector-1.0
