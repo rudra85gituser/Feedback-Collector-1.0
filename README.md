@@ -1,51 +1,58 @@
-# 🚀 Simplified Feedback Collector
+# 📝 Feedback Collector (Dark Themed)
 
-A clean and responsive feedback collector application built with **React (Next.js)**, **JavaScript**, and **custom CSS**. This micro-app allows users to submit feedback and includes an admin view to manage all submissions — all within a sleek, modern interface.
+A modern, dark-themed feedback collector with a minimalistic and responsive design. It includes both frontend and backend features to handle feedback submissions and provide an admin view for managing entries.
 
----
+## 🔍 Overview
 
-## 🎯 Project Objective
-
-To create a minimal, yet professional feedback collection application that allows users to submit their name, email, and a short message — with a admin view to see all submissions.
+This project allows users to submit feedback via a simple and clean interface. The submitted feedback can be viewed by an admin through a toggleable view. All data is stored using JSON-based storage through backend APIs.
 
 ---
 
-### ✅ Added:
-- Plain JavaScript with clean, readable logic
-- Custom CSS with responsive styling
-- Custom-built toast system and UI components
+## ✨ Features
+
+### 🌑 Frontend
+
+- **Modern dark theme** with gradient highlights
+- Fully responsive layout built using **Tailwind CSS**
+- Accessible **Feedback Form** with:
+  - Full Name (Text input)
+  - Email (Validated input)
+  - Feedback message (Textarea)
+  - Submit button with loading animation
+- **Admin Panel**:
+  - Toggle button: _"View Submitted Feedback"_
+  - Feedback displayed in stylish cards
+  - Displays **timestamps** using relative time formatting
+- **User Experience Enhancements**:
+  - Toast notifications for success and errors
+  - Form validation with intuitive error prompts
+  - Micro animations for better interaction
 
 ---
 
-## 💡 Features
+### 🔧 Backend
 
-- ✅ **Feedback Form** with:
-  - Full Name
-  - Email (with validation)
-  - Feedback message
-  - Submit button with loading state
-- 🔁 **Toggle Admin View**
-  - Displays all submitted feedback
-- 🕶 **Modern Dark UI**
-  - Purple and blue gradient accents
-  - Dark theme using CSS variables
-- 🔔 **Custom Toast Notifications**
-- 🕒 **Relative Timestamps**
-- 📱 **Responsive Design**
-- ⚠️ **Error Handling and Validation**
+- API routes using **Next.js Server Actions**
+- Endpoints:
+  - `POST /submit-feedback`: Stores feedback in a local JSON file
+  - `GET /feedbacks`: Retrieves all submitted feedback
+- JSON-based storage for quick and easy deployment
 
 ---
 
-## 📁 File Structure
+## 🚀 Tech Stack
 
-```plaintext
-app/
-├── page.jsx           # Main component with form and admin view
-├── actions.js         # Handles server actions for feedback submission
-├── api/
-│   └── feedbacks/
-│       └── route.js   # API endpoint for extensibility
-└── layout.jsx         # Root layout file
+- **Framework**: Next.js
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **State Management**: React Hooks
+- **UI Enhancements**: Toast notifications, transitions, responsive design
 
-styles/
-└── main.css           # Global styles and custom theme
+---
+
+## 🛠 How to Run Locally
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/feedback-collector.git
+   cd feedback-collector
