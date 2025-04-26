@@ -8,15 +8,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
 
 export default function FeedbackForm() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
 
     // Basic validation
     if (!name || !email || !message) {
@@ -54,8 +58,10 @@ export default function FeedbackForm() {
         }),
       })
 
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error("Failed to submit feedback")
+        throw new Error(data.error || "Failed to submit feedback")
       }
 
       toast({
@@ -68,9 +74,11 @@ export default function FeedbackForm() {
       setEmail("")
       setMessage("")
     } catch (error) {
+      console.error("Error submitting feedback:", error)
+      setError(error instanceof Error ? error.message : "Failed to submit feedback")
       toast({
         title: "Error",
-        description: "Failed to submit feedback. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to submit feedback. Please try again.",
         variant: "destructive",
       })
     } finally {
@@ -85,6 +93,14 @@ export default function FeedbackForm() {
         <CardDescription className="text-gray-400">Fill out the form below to submit your feedback</CardDescription>
       </CardHeader>
       <CardContent>
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>

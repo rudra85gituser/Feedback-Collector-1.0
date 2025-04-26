@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/components/ui/use-toast"
 import { formatDistanceToNow } from "date-fns"
+import { Button } from "@/components/ui/button"
 
 // Define the Feedback type
 interface Feedback {
@@ -17,6 +18,7 @@ interface Feedback {
 export default function FeedbackList() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     loadFeedback()
@@ -24,18 +26,21 @@ export default function FeedbackList() {
 
   const loadFeedback = async () => {
     setLoading(true)
+    setError(null)
     try {
       const response = await fetch("/api/feedback")
       if (!response.ok) {
-        throw new Error("Failed to fetch feedback")
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to fetch feedback")
       }
       const data = await response.json()
       setFeedbacks(data)
     } catch (error) {
       console.error("Error loading feedback:", error)
+      setError(error instanceof Error ? error.message : "Failed to load feedback data")
       toast({
         title: "Error",
-        description: "Failed to load feedback data",
+        description: error instanceof Error ? error.message : "Failed to load feedback data",
         variant: "destructive",
       })
     } finally {
@@ -48,6 +53,19 @@ export default function FeedbackList() {
       <div className="flex justify-center items-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
       </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card className="bg-gray-900 border-gray-800">
+        <CardContent className="pt-6 flex flex-col items-center">
+          <p className="text-center text-red-400 mb-4">Error: {error}</p>
+          <Button onClick={loadFeedback} variant="outline">
+            Try Again
+          </Button>
+        </CardContent>
+      </Card>
     )
   }
 

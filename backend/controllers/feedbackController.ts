@@ -37,6 +37,7 @@ export async function handleGetAllFeedback() {
     const feedbacks = await getAllFeedback()
     return NextResponse.json(feedbacks)
   } catch (error) {
+    console.error("Error in handleGetAllFeedback:", error)
     return NextResponse.json({ error: "Failed to fetch feedback" }, { status: 500 })
   }
 }
@@ -53,6 +54,7 @@ export async function handleCreateFeedback(request: NextRequest) {
     const feedback = await createFeedback(data)
     return NextResponse.json(feedback, { status: 201 })
   } catch (error) {
+    console.error("Error in handleCreateFeedback:", error)
     return NextResponse.json({ error: "Failed to submit feedback" }, { status: 500 })
   }
 }
